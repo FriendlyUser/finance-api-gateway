@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"flag"
 	"log"
 	"os"
@@ -12,11 +13,30 @@ import (
 )
 
 func main() {
-	port := flag.Int("p", 0, "Port of the service")
+	port := flag.Int("p", 80, "Port of the service")
 	logLevel := flag.String("l", "ERROR", "Logging level")
 	debug := flag.Bool("d", false, "Enable the debug")
-	configFile := flag.String("c", "/etc/lura/configuration.json", "Path to the configuration filename")
+	configFile := flag.String("c", "lura.json", "Path to the configuration filename")
 	flag.Parse()
+
+	dec, err := base64.StdEncoding.DecodeString(os.Getenv("API_GATEWAY_B64"))
+	if err != nil {
+		panic(err)
+	}
+
+	f, err := os.Create("lura.json")
+
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	if _, err := f.Write(dec); err != nil {
+		panic(err)
+	}
+	if err := f.Sync(); err != nil {
+		panic(err)
+	}
 
 	parser := config.NewParser()
 	serviceConfig, err := parser.Parse(*configFile)
