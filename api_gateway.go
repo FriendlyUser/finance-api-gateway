@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	port := flag.Int("p", 80, "Port of the service")
+	port := flag.Int("p", 8080, "Port of the service")
 	logLevel := flag.String("l", "ERROR", "Logging level")
 	debug := flag.Bool("d", false, "Enable the debug")
 	configFile := flag.String("c", "lura.json", "Path to the configuration filename")
