@@ -3,8 +3,10 @@ package main
 import (
 	"encoding/base64"
 	"flag"
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/luraproject/lura/v2/config"
 	"github.com/luraproject/lura/v2/logging"
@@ -13,7 +15,11 @@ import (
 )
 
 func main() {
-	port := flag.Int("p", 8000, "Port of the service")
+	port, err := strconv.Atoi(os.Getenv("PORT")) // flag.Int("p", 8000, "Port of the service")
+	if err != nil {
+		fmt.Println("Error during conversion")
+		port = 8000
+	}
 	logLevel := flag.String("l", "ERROR", "Logging level")
 	debug := flag.Bool("d", false, "Enable the debug")
 	configFile := flag.String("c", "lura.json", "Path to the configuration filename")
