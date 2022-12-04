@@ -6,10 +6,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/luraproject/lura/config"
-	"github.com/luraproject/lura/logging"
-	"github.com/luraproject/lura/proxy"
-	"github.com/luraproject/lura/router/gin"
+	"github.com/luraproject/lura/v2/config"
+	"github.com/luraproject/lura/v2/logging"
+	"github.com/luraproject/lura/v2/proxy"
+	"github.com/luraproject/lura/v2/router/gin"
 )
 
 func main() {
@@ -49,7 +49,7 @@ func main() {
 	}
 
 	logger, _ := logging.NewLogger(*logLevel, os.Stdout, "[LURA]")
-	gin.SetMode(gin.ReleaseMode)
+	// gin.SetMode(gin.ReleaseMode)
 	routerFactory := gin.DefaultFactory(proxy.DefaultFactory(logger), logger)
 
 	routerFactory.New().Run(serviceConfig)
