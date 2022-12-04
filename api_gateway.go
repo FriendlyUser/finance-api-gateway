@@ -49,7 +49,7 @@ func main() {
 	}
 
 	logger, _ := logging.NewLogger(*logLevel, os.Stdout, "[LURA]")
-
+	gin.SetMode(gin.ReleaseMode)
 	routerFactory := gin.DefaultFactory(proxy.DefaultFactory(logger), logger)
 
 	routerFactory.New().Run(serviceConfig)
